@@ -109,46 +109,90 @@ def search_jobs_direct_api(keywords, location, locale="en_US", affid="213e213hd1
 
 def create_demo_response(keywords, location):
     """
-    Create a demo response for testing when API is not available.
+    Create an enhanced demo response for testing when API is not available.
     """
+    import random
+    from datetime import datetime, timedelta
+
+    # Enhanced company list
+    companies = [
+        "Tech Innovations A.Ş.", "Dijital Çözümler Ltd.", "Yazılım Geliştirme A.Ş.",
+        "Teknoloji Merkezi", "İnovasyon Hub", "Startup Accelerator",
+        "Global Tech Solutions", "Akıllı Sistemler A.Ş.", "Veri Analitik Ltd.",
+        "Mobil Uygulama Stüdyosu", "E-Ticaret Platformu", "Fintech Startup",
+        "Bulut Teknolojileri A.Ş.", "AI Research Lab", "Blockchain Solutions"
+    ]
+
+    # Job types and experience levels
+    job_types = ["Senior", "Mid-Level", "Junior", "Lead", "Principal"]
+    work_types = ["Tam Zamanlı", "Yarı Zamanlı", "Freelance", "Remote", "Hibrit"]
+
+    # Skill sets based on keywords
+    skill_sets = {
+        "developer": ["React", "JavaScript", "TypeScript", "Node.js", "Python", "Git", "Docker"],
+        "frontend": ["React", "Vue.js", "Angular", "HTML", "CSS", "JavaScript", "Webpack"],
+        "backend": ["Node.js", "Python", "Java", "C#", "PostgreSQL", "MongoDB", "Redis"],
+        "mobile": ["React Native", "Flutter", "Swift", "Kotlin", "iOS", "Android"],
+        "data": ["Python", "R", "SQL", "Machine Learning", "TensorFlow", "Pandas"],
+        "devops": ["Docker", "Kubernetes", "AWS", "Jenkins", "Terraform", "Linux"]
+    }
+
+    # Determine relevant skills
+    relevant_skills = skill_sets.get("developer", ["Programming", "Problem Solving"])
+    for key in skill_sets:
+        if key.lower() in keywords.lower():
+            relevant_skills = skill_sets[key]
+            break
+
+    # Generate multiple job listings
+    jobs = []
+    for i in range(6):  # Generate 6 jobs
+        job_type = random.choice(job_types)
+        company = random.choice(companies)
+        work_type = random.choice(work_types)
+
+        # Salary ranges based on experience level
+        salary_ranges = {
+            "Junior": "8,000 - 15,000 TL",
+            "Mid-Level": "15,000 - 25,000 TL",
+            "Senior": "25,000 - 40,000 TL",
+            "Lead": "35,000 - 55,000 TL",
+            "Principal": "50,000 - 80,000 TL"
+        }
+
+        # Random skills selection
+        job_skills = random.sample(relevant_skills, min(4, len(relevant_skills)))
+
+        # Generate posting date (within last 7 days)
+        days_ago = random.randint(0, 7)
+        post_date = (datetime.now() - timedelta(days=days_ago)).strftime("%Y-%m-%d")
+
+        job = {
+            "id": f"demo_job_{i+1}",
+            "title": f"{job_type} {keywords}",
+            "company": company,
+            "location": location if work_type != "Remote" else f"{location} (Remote)",
+            "salary": salary_ranges.get(job_type, "Rekabetçi maaş"),
+            "description": f"{company} bünyesinde {job_type.lower()} seviye {keywords} pozisyonu için aday aranmaktadır. Modern teknolojiler ile çalışma, esnek çalışma saatleri ve profesyonel gelişim fırsatları sunulmaktadır.",
+            "requirements": job_skills,
+            "type": work_type,
+            "url": f"https://example.com/job/{i+1}",
+            "date": post_date,
+            "posted_date": post_date
+        }
+        jobs.append(job)
+
     return {
         "type": "demo",
-        "message": "Bu bir demo yanıttır. Gerçek Careerjet API'si için geçerli bir API key gereklidir.",
+        "message": "Bu gelişmiş demo yanıttır. Gerçek Careerjet API'si için geçerli bir API key gereklidir.",
         "search_params": {
             "keywords": keywords,
             "location": location
         },
-        "jobs": [
-            {
-                "title": f"{keywords} - Senior Pozisyon",
-                "company": "Demo Teknoloji A.Ş.",
-                "location": location,
-                "salary": "15.000 - 25.000 TL",
-                "description": f"{keywords} alanında deneyimli profesyonel aranıyor. {location} lokasyonunda çalışma imkanı.",
-                "url": "https://example.com/job1",
-                "date": "2025-01-04"
-            },
-            {
-                "title": f"{keywords} - Junior Pozisyon",
-                "company": "Yazılım Çözümleri Ltd.",
-                "location": location,
-                "salary": "8.000 - 15.000 TL",
-                "description": f"Yeni mezun {keywords} uzmanı aranıyor. {location} merkezli çalışma.",
-                "url": "https://example.com/job2",
-                "date": "2025-01-03"
-            },
-            {
-                "title": f"{keywords} - Remote Çalışma",
-                "company": "Dijital Ajans",
-                "location": f"{location} (Remote)",
-                "salary": "12.000 - 20.000 TL",
-                "description": f"Uzaktan çalışma imkanı ile {keywords} pozisyonu. Esnek çalışma saatleri.",
-                "url": "https://example.com/job3",
-                "date": "2025-01-02"
-            }
-        ],
-        "total_jobs": 3,
-        "note": "Gerçek iş ilanları için https://www.careerjet.com/partners/api/ adresinden API key alın."
+        "jobs": jobs,
+        "total_jobs": len(jobs),
+        "note": "Gerçek iş ilanları için https://www.careerjet.com/partners/api/ adresinden API key alın.",
+        "enhanced": True
     }
 
 

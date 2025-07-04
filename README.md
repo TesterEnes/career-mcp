@@ -40,6 +40,35 @@ docker run -it careerjet-mcp
 
 ## Kullanım
 
+### HTTP API Server
+
+API server'ı başlatmak için:
+
+```bash
+python api_server.py
+```
+
+Server http://localhost:5000 adresinde çalışacaktır.
+
+#### API Endpoints
+
+- **GET /** - Sağlık kontrolü
+- **GET /api/jobs/search** - İş arama
+- **GET /api/jobs/details** - İş detayları
+
+#### Örnek API Kullanımı
+
+```bash
+# Sağlık kontrolü
+curl http://localhost:5000/
+
+# İş arama
+curl "http://localhost:5000/api/jobs/search?keywords=developer&location=Istanbul&locale=tr_TR"
+
+# İş detayları
+curl "http://localhost:5000/api/jobs/details?url=https://example.com/job/1"
+```
+
 ### MCP Tools
 
 #### 1. `search_jobs_tool`

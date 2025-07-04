@@ -1,0 +1,28 @@
+{
+  "servers": {
+    "mastra": {
+      "command": "cmd",
+      "args": [
+        "/c",
+        "npx",
+        "-y",
+        "@mastra/mcp-docs-server"
+      ],
+      "type": "stdio"
+    },
+    "career-mcp": {
+      "command": "cmd",
+      "args": [
+        "/c",
+        "npx",
+        "-y",
+        "@smithery/cli@latest",
+        "run",
+        "@TesterEnes/career-mcp",
+        "--key",
+        "56f935d0-c7b4-42bb-b033-7cfd112963e5"
+      ],
+      "type": "stdio"
+    }
+  }
+}
