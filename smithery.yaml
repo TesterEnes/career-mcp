@@ -1,0 +1,25 @@
+startCommand:
+  type: stdio
+  configSchema:
+    # JSON Schema defining the configuration options for the Careerjet Job Search MCP.
+    type: object
+    properties:
+      affid:
+        type: string
+        description: "Affiliate ID provided by Careerjet (required for API access)"
+        default: "213e213hd12344552"
+      locale:
+        type: string
+        description: "Default locale code for job searches (e.g., en_US, en_GB, de_DE)"
+        default: "en_US"
+      user_agent:
+        type: string
+        description: "User agent string for API requests"
+        default: "Mozilla/5.0 (compatible; MCP-CareerjetBot/1.0)"
+  commandFunction:
+    |-
+    (config) => ({ command: 'python', args: ['-m', 'server'] })
+  exampleConfig:
+    affid: "213e213hd12344552"
+    locale: "en_US"
+    user_agent: "Mozilla/5.0 (compatible; MCP-CareerjetBot/1.0)"
